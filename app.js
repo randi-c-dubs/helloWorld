@@ -24,3 +24,7 @@ app.get("/api/signUp", function(req, res) {
 	User.signUp(req, res);
 });
 
+app.get("/api/signIn", function(req, res) {
+	User.signIn(req, res);
+});
+
