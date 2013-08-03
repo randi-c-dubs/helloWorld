@@ -8,7 +8,7 @@ var userSchema = mongoose.Schema({
 	skills: [{type:String}],
 	projects: [{type:mongoose.Schema.Types.ObjectId, ref:"Project"}],
 	githubUrl: {type:String},
-	location: {type:String, required: true},
+	locationString: {type:String, required: true},
 	lat: {type:Number, required:true},
 	lng: {type:Number, required:true}
 })
