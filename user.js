@@ -84,7 +84,7 @@ userSchema.statics.getFiltered = function(req, res) {
 		lat : {$gt: bottomRightLat, $lt: topLeftLat},
 		lng : {$lt: bottomRightLng, $gt: topLeftLng},
 	}).populate("projects").exec(function(err, users) {
-		if (err) res.send({result: "Error"});
+		if (err) res.send({result: "Error", payload: err});
 		else res.send({result: "Success", payload: users})
 	});
 }
