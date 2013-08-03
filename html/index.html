@@ -3,12 +3,10 @@
 	    <script src="http://code.jquery.com/jquery.js"></script>
 	    <script src="bootstrap/js/bootstrap.min.js"></script>
 	    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-
-
-	    <!-- 	Map box client side libraries     -->
-	    <link href='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet' />
 	    <link href="bootstrap/css/index.css" rel="stylesheet">
-	    <script src='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
+	    
+	    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	    
 	</head>
 	
 	<style>
@@ -64,12 +62,19 @@
 				      var data = {email:email};
 				      $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
 					     if(response.result == 'Error'){
-					     	geocoder.query(location, function(err, result){
-						     	if(error){
+					     	var geocoder = (new google.maps.Geocoder()).geocode((new google.maps.GeocoderRequest()).address=location,
+					     	function(geocoderResults,geocoderStatus){
+						     	if(geocoderResults.length == 0){
 							     	console.log("geocoderError");
 						     	}else{
 						     	 
-							     data = {email:email, name:name, languages:languages, locationString:location, lat:result.latlng[0][0], lng:result.latlng[0][1], fbUrl:fbUrl};
+							     data = {email:email, 
+									     name:name, 
+									     languages:languages, 
+									     locationString:location, 
+									     lat:geocoderResults[0].geometry.location.lat(), 
+									     lng:result.latlng[0][1], fbUrl:fbUrl
+							     };
 							     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signUp", data, function(response){
 								     if(response.result == "Error"){
 									     console.log("New Account Error");
