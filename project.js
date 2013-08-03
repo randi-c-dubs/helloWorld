@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-var User = require("user");
+var User = require("./user.js");
 
 var projectSchema = mongoose.Schema({
 	name: {type:String, required:true},
