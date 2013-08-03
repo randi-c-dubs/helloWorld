@@ -98,8 +98,7 @@
 						    error: function (responseData, textStatus, errorThrown) {
 						        console.log('GET failed.');
 						    }
-						});		      
-				      //query the signin api  - on "error" go to "api/signup"; on "success" go to map view
+						});
 				      
 				    } else if (response.status === 'not_authorized') {
 				      FB.login();
