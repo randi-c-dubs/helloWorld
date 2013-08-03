@@ -120,7 +120,7 @@
 
 
 		<script>
-
+		var map;
 		function runJS() {
 			var token;
 			var name;
@@ -136,7 +136,7 @@
 
 
 			// Used to place map on screen
-			var map = new GMap2(document.getElementById("map"));
+			map = new GMap2(document.getElementById("map"));
 			map.addControl(new GLargeMapControl());
 			map.addControl(new GMapTypeControl());
 			map.setCenter(new GLatLng(43.907787,-50.26),3);
