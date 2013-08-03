@@ -50,16 +50,16 @@
 				      graphUser_API += token;
 				      $.get(graphUser_API, function(response){
 				          console.log(response);
-					      name = response.name;
-					      console.log(name);
-					      email = response.email;
-					      console.log(email);
+/* 					      name = response.name; */
+/* 					      console.log(name); */
+/* 					      email = response.email; */
+/* 					      console.log(email); */
 					      for (var i = 0; i < response.languages.length; i ++){
-					      		languages.push(response.languages[i].name);
+/* 					      		languages.push(response.languages[i].name); */
 					      }
-					      location = response.location;
-					      console.log(location);
-					      fbUrl = response.link;
+/* 					      location = response.location; */
+/* 					      console.log(location); */
+/* 					      fbUrl = response.link; */
 						     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
 							     if(response.result == 'Error'){
 							     	var geocoder = new google.maps.Geocoder();
