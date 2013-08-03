@@ -70,6 +70,25 @@ userSchema.statics.signIn = function(req, res) {
 	})
 }
 
+userSchema.statics.getFiltered = function(req, res) {
+	var skills = typeof req.body.skills === "undefined" ? [] : req.body.skills;
+	var languages = typeof req.body.languages === "undefined" ? [] : req.body.languages;
+	var topLeftLat = typeof req.body.topLeftLat === "undefined" ? 0 : req.body.topLeftLat;
+	var topLeftLng = typeof req.body.topLeftLng === "undefined" ? 0 : req.body.topLeftLng;
+	var bottomRightLat = typeof req.body.bottomRightLat === "undefined" ? 0 : req.body.bottomRightLat;
+	var bottomRightLng = typeof req.body.bottomRighttLng === "undefined" ? 0 : req.body.bottomRighttLng;
+
+	User.find({
+		skills : {$in: skills},
+		languages : {$in: languages},
+		lat : {$gt: bottomRightLat, $lt: topLeftLat},
+		lng : {$lt: bottomRightLng, $gt: topLeftLng},
+	}).populate("projects").exec(function(err, users) {
+		if (err) res.send({result: "Error", payload: err});
+		else res.send({result: "Success", payload: users})
+	});
+}
+
 /** Instance methods **/
 
 /* DB Hooks */

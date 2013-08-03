@@ -32,3 +32,7 @@ app.post("/api/signIn", function(req, res) {
 app.post("/api/newProject", function(req, res) {
 	Project.newProject(req, res);
 });
+
+app.post("/api/getFiltered", function(req, res) {
+	User.getFiltered(req, res);
+})
