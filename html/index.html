@@ -5,7 +5,7 @@
 	    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	    <link href="bootstrap/css/index.css" rel="stylesheet">
 
-	    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyCi57alMzI6upazhiOfwQmwVxka_qSQ7s8" type="text/javascript"></script>
+	    <script src="http://maps.google.com/maps?file=api&amp;v=3&amp;sensor=false&amp;key=AIzaSyCi57alMzI6upazhiOfwQmwVxka_qSQ7s8" type="text/javascript"></script>
 
 	</head>
 
@@ -121,6 +121,21 @@
 			map.addControl(new GLargeMapControl());
 			map.addControl(new GMapTypeControl());
 			map.setCenter(new GLatLng(43.907787,-50.26),3);
+			
+			function setMarkers(people) {
+				for (var i=0; i<people.length; i++) {
+					setTimeout( function(people, i) {
+						return function() {
+						var person = people[i];
+						var point = new GLatLng(person.lat, person.lng);
+						var html='<div><img src="'+person.iconUrl+'"><div>'+person.name+'|'+person.workPlace+'</div></div>';
+						var marker = createMarker(point,html);
+						map.addOverlay(marker);
+					}}(people, i), 500*i);
+				}
+			}
+			
+			setMarkers(helloWorld.results);
 
 			function hideEnter() {
 				$('.enter-body').removeClass('show');
@@ -257,7 +272,7 @@
 
 
 <!-- Login div -->
-	<div class="module" style="display:block;" id="theHero">
+	<div class="module" id="theHero">
 	    <div id="enter-content">
 			<div id="logo"><i id="enter-logo"></i><i id="rotating-world"></i></div>
 			<div class="fb-login-button" show-faces="true"></div>
