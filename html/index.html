@@ -79,7 +79,8 @@
 						case "loggedIn":
 							this.state = "loggedIn";
 							this.switchUI(this.state);
-							$(".loggedOut-module").fadeIn();
+							$(".loggedOut-module").fadeOut();
+							setMarkers(this.results);
 					}
 				};
 
@@ -91,6 +92,21 @@
 					}
 				};
 			}
+
+			function setMarkers(people) {
+				for (var i=0; i<people.length; i++) {
+					setTimeout( function(people, i) {
+						return function() {
+						var person = people[i];
+						var point = new GLatLng(person.lat, person.lng);
+						var html='<div><img src="'+person.iconUrl+'"><div>'+person.name+'|'+person.workPlace+'</div></div>';
+						var marker = createMarker(point,html);
+						map.addOverlay(marker);
+					}}(people, i), 250*i);
+				}
+			}
+
+
 
 			var helloWorld = new App();
 		</script>
@@ -124,21 +140,8 @@
 			map.addControl(new GLargeMapControl());
 			map.addControl(new GMapTypeControl());
 			map.setCenter(new GLatLng(43.907787,-50.26),3);
-			
-			function setMarkers(people) {
-				for (var i=0; i<people.length; i++) {
-					setTimeout( function(people, i) {
-						return function() {
-						var person = people[i];
-						var point = new GLatLng(person.lat, person.lng);
-						var html='<div><img src="'+person.iconUrl+'"><div>'+person.name+'|'+person.workPlace+'</div></div>';
-						var marker = createMarker(point,html);
-						map.addOverlay(marker);
-					}}(people, i), 250*i);
-				}
-			}
-			
-			setMarkers(helloWorld.results);
+
+
 
 			function hideEnter() {
 				$('.enter-body').removeClass('show');
