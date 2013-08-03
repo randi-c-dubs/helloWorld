@@ -15,7 +15,7 @@ projectSchema.statics.newProject = function(req, res) {
 	var name = req.body.name;
 	var descritipn = req.body.description;
 	console.log(req.body.skills);
-	var skills = JSON.parse(req.body.skills);
+	var skills = JSON.parse(req.body.skills == "undefined" ? "" : req.body.skills);
 	User.findOne({token: token}, function(err, user) {
 		if (err || !user) res.send({result: "Error"});
 		else {
