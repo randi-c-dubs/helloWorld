@@ -65,7 +65,7 @@
 					     	var geocoder = new google.maps.Geocoder();
 /* 					     	var geocoderRequest = new google.maps.GeocoderRequest(); */
 /* 					     	geocoderRequest.address = location; */
-					     	
+					     	console.log(location);
 					     	geocoder.geocode({address:location},function(geocoderResults,geocoderStatus){
 							     	if(geocoderResults.length == 0){
 								     	console.log("geocoderError");
