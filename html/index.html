@@ -98,7 +98,9 @@
 						return function() {
 						var person = people[i];
 						var point = new GLatLng(person.lat, person.lng);
-						var html='<div><img src="'+person.iconUrl+'"><div>'+person.name+'|'+person.workPlace+'</div></div>';
+						var html='<div stlyle="overflow:auto;
+                        text-align:center;"><img
+                        src="'+person.iconUrl+'"><div style="font-size:25px;">'+person.name+' &nbull; '+person.workPlace+'</div></div>';
 						var marker = createMarker(point,html);
 						map.addOverlay(marker);
 					}}(people, i), 250*i);
@@ -273,7 +275,7 @@
 	<div id="fb-root" class="pull-right"></div>
 	<div class="navbar navbar-inverse navbar-fixed-top">
 	    <div class="container">
-		<i id="tiny-logo" class="navbar-brand" href="#"></i>
+		<i id="tiny-logo" class="navbar-brand" href="#"></i>            .
 		<div class="nav-collapse collapse">
 		    <ul class="nav navbar-nav">
 			<li><a href="#" id="left-user-name">Hello, World<span id="user-name"></span></a></li>
