@@ -4,51 +4,64 @@ body {
 
 #map{
     width:400px;
-    height: 600px;
+    height:600px;
 }
 
 /* Main logo */
 .enter-body {
     background:white url(worldmap.png);
     background-size:cover;
-}
-#enter-content {
-    border:15px solid #686868;
-    margin:150px auto;
-    border-radius:15px;
-    text-align:center;
-    background:white;
-    height:650px;
+    height:800px;
     width:1000px;
-    
+    margin:0 auto;
+    padding:150px;
+}
+
+#enter-content {
+    margin:0 auto;
+    border:15px solid black;
+    border-radius:15px;
+    background:white;
+    overflow:inherit; 
+    width:500px;
+    height:300px;
+    line-height:100px;
 }
 #logo {
     text-align:center;
-    margin:100px;
+    margin:50px auto 85px auto;
+    width:500px;
 }
 #enter-logo {
     content:url(logo_short.png);
     margin:0 auto;
+    width:300px;
 }
 #rotating-world{
-    display:inline-block;
     content: url(rotating_globe_00769.gif);
-    height:250px;
-    width:250px;
+    display:inline-block;
+    width:150px;
+    margin-left:-20px;
 }
 #login {
+    border-radius:10px;
     font-family:abeatbyKai, sans-serif;
     transition:all 250ms ease-in;
-    text-decoration: none;
-    background:#686868;
+    position:absolute;
+    text-decoration:none;
+    background:black;
+    line-height:60px;
     font-size:40px;
-    padding:15px;
+    padding:0 15px;
     color:white;
+    height:60px;
+    margin-top:-60px;
+    margin-left:150px;
 }
 #login:hover {
-    border:5px solid #686868;
+    border:5px solid black;
     background:#ddee99;
-    color:#686868;
+    color:black;
 }
 #login:active {
     background:#77bbdd;
