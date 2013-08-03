@@ -10,12 +10,41 @@
 	</head>
 	
 	<style>
-	</style>
 	
+	</style>
 	<body onload="runJS()">
 		<!--Facebok authentication-->
 		<div id="fb-root"></div>
 	<!-- **	<script src="//connect.facebook.net/en_US/all.js"></script> -->
+		<script>
+			function App(){
+				this.user;
+				this.state = "loggedOut";
+				this.results;
+				
+				this.switchState = function(newState){
+					switch(newState){
+						case "loggedOut":
+							break;
+						case "loggedIn":
+							this.state = "loggedIn";
+							this.switchUI(this.state);
+					}
+				};
+				
+				this.switchUI = function(newState){
+					$(".module").css("display","none");
+					switch(newState){
+						case "loggedIn":
+							$(".loggedIn-module").fadeIn();
+					}	
+				};
+			}
+			
+			var helloWorld = new App();
+		</script>
+	
+	
 		<script>
 
 		function runJS() {
@@ -27,6 +56,8 @@
 			var lat;
 			var lng;
 			var fbUrl;
+			
+			var graphUser_API = "https://graph.facebook.com/me?fields=name,email,languages,location,link,picture&access_token=";
 			
 			/* Google Map API */      
 			function createMarker(point,html) {
@@ -103,14 +134,14 @@
 											     if(response.result == "Error"){
 												     console.log("New Account Error: " + response.payload);
 											     } else {
-												     
+												     helloWorld.user = response.payLoad;
+												     helloWorld.switchState("loggedIn");
 											     }
 										     });
 										 }
 									});
 								}else{		//Remove the welcome screen and flash the map view
-									alert("You successfully Signed in!!!");
-									map.className = "visible";
+									helloWorld.user = response.payLoad;
 								}
 							});
  
@@ -121,7 +152,7 @@
 						});
 				      
 				    } else if (response.status === 'not_authorized') {
-				    	map.className = "hidden";
+
 				      FB.login();
 				    } else {
 				      FB.login();
@@ -152,43 +183,37 @@
 	*/
 		   }
 		</script>
+		
+		
+		<script>
+			var state = "";
+		</script>
+		
 	<div id="fb-root" class="pull-right"></div>
 	<div class="navbar navbar-inverse navbar-fixed-top">
 	    <div class="container">
 		<i id="tiny-logo" class="navbar-brand" href="#">Logo</i>
 		<div class="nav-collapse collapse">
 		    <ul class="nav navbar-nav">
-			<li><a href="#contact">About</a></li>
-			<li><a href="#" id="left">Hello,<span id="user-name"></span></a></li>
+			<li><a href="#" id="left-user-name">Hello, <span id="user-name"></span></a></li>
 			<li><i id="user-pic"></i></li>
 		    </ul>
 		    <!--/.nav-collapse -->
 		</div>
 	    </div>
-	    <div class="container" id="filters">
-		<i class="navbar-brand" href="#">Filters</i>
-		<div class="nav-collapse collapse">
-		    <ul class="nav navbar-nav">
-			<li><a href="#contact">Language</a></li>
-			<li><a href="#">Skills<span id="user-name"></span></a></li>
-			<li><i id="user-pic"></i></li>
-		    </ul>
-		    <!--/.nav-collapse -->
-		</div>
-	    </div>
+	    
 	</div>
 
 	
 <!-- Login div -->
-	<div class="enter-body">
+	<div class="module" style="display:block;" id="theHero">
 	    <div id="enter-content">
 			<div id="logo"><i id="enter-logo"></i><i id="rotating-world"></i></div>
-			<div class="fb-login-button" show-faces="false"></div>
- 		<a href="" id="login" onclick="hideEnter()">login &#9658;</a>
+			<div class="fb-login-button" show-faces="true"></div>
 	    </div>
     </div>
     
 <!--   Map view div   -->
-    <div id="map" class=""></div>
+    <div id="map"></div>
 	</body>
 </html>

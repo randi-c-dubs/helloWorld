@@ -22,6 +22,8 @@ body {
 #map {
     height:100%;
     width:100%;
+    position: absolute;
+    z-index: -1;
 }
 
 /* Main logo */
@@ -76,6 +78,8 @@ body {
     height:60px;
     margin-top:-60px;
     margin-left:150px;
+    
+    z-index: 1;
 }
 #login:hover {
     background:#ddee99;
@@ -87,4 +91,17 @@ body {
 
 .show {
     display:block;
+}
+
+.module{
+	display: none;
+}
+
+#theHero{
+	position: absolute;
+	z-index: 1;
+	top: 50%;
+	left: 50%;
+	margin-top: -150px;
+	margin-left: -250px;
 }
