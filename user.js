@@ -83,7 +83,7 @@ userSchema.statics.getFiltered = function(req, res) {
 		languages : {$in: languages},
 		lat : {$gt: bottomRightLat, $lt: topLeftLat},
 		lng : {$lt: bottomRightLng, $gt: topLeftLng},
-	}).populate("projects", function(err, users) {
+	}).populate("projects").exec(function(err, users) {
 		if (err) res.send({result: "Error"});
 		else res.send({result: "Success", payload: users})
 	});
