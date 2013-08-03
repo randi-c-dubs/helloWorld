@@ -21,14 +21,14 @@ db.once("open", function callback() {
 
 /* Routes */
 
-app.get("/api/signUp", function(req, res) {
+app.post("/api/signUp", function(req, res) {
 	User.signUp(req, res);
 });
 
-app.get("/api/signIn", function(req, res) {
+app.post("/api/signIn", function(req, res) {
 	User.signIn(req, res);
 });
 
-app.get("/api/newProject", function(req, res) {
+app.post("/api/newProject", function(req, res) {
 	Project.newProject(req, res);
 });
