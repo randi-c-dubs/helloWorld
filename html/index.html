@@ -73,7 +73,6 @@
 				this.switchState = function(newState){
 					switch(newState){
 						case "loggedOut":
-							$(".loggedOut-module").fadeOut();
 							$(".loggedIn-module").fadeOut();
 							break;
 						case "loggedIn":
@@ -213,6 +212,9 @@
 							});
 
 				      },
+				      
+				      	
+				      
 						    error: function (responseData, textStatus, errorThrown) {
 						        console.log('GET failed.');
 						    }
@@ -227,6 +229,11 @@
 				      FB.login();
 				    }
 				  });
+				  
+				  
+				  FB.Event.subscribe('auth.logout', function(response) {
+					  top.location.href = "http://ec2-75-101-252-133.compute-1.amazonaws.com/";
+					  });
 		  };
 
 
