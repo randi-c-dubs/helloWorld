@@ -1,7 +1,7 @@
 var express = require('express');
 var mongoose = require("mongoose");
 var User = require('./user');
-var Project = requre("project");
+var Project = require("project");
 
 /* Initialize */
 // Express & Nunjucks
