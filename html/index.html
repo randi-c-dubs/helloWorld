@@ -3,12 +3,10 @@
 	    <script src="http://code.jquery.com/jquery.js"></script>
 	    <script src="bootstrap/js/bootstrap.min.js"></script>
 	    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-
-
-	    <!-- 	Map box client side libraries     -->
-	    <link href='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet' />
 	    <link href="bootstrap/css/index.css" rel="stylesheet">
-	    <script src='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
+	    
+	    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	    
 	</head>
 	
 	<style>
@@ -19,6 +17,16 @@
 		<div id="fb-root"></div>
 		<script src="//connect.facebook.net/en_US/all.js"></script>
 		<script>
+		var token;
+		var name;
+		var email;
+		var languages = [];
+		var locationName;
+		var lat;
+		var lng;
+		var fbUrl;
+		
+		var graphUser_API = "https://graph.facebook.com/me?fields=name,email,languages,location,link&access_token=";
 
 
 /* FB authentication 
@@ -28,35 +36,82 @@
 		    // init the FB JS SDK
 		    FB.init({
 		      appId      : '540749739313645',                        // App ID from the app dashboard
-		      channelUrl : 'ec2-75-101-252-133.compute-1.amazonaws.com/channel.html', // Channel file for x-domain comms
 		      cookie     : true,
 		      status     : true,                                 // Check Facebook Login status
 		      xfbml      : true                                  // Look for social plugins on the page
 		    });
 		
 		    // Additional initialization code such as adding Event Listeners goes here
-		    	FB.Event.subscribe('auth.authResponseChange', function(response) {
+			    FB.Event.subscribe('auth.login', function(response) {
 				    // Here we specify what we do with the response anytime this event occurs. 
 				    if (response.status === 'connected') {
-				      // The response object is returned with a status field that lets the app know the current
-				      // login status of the person. In this case, we're handling the situation where they 
-				      // have logged in to the app.
-				      alert(response.authResponse.accessToken);
+						token = response.authResponse.accessToken;
+						graphUser_API += token;
+						console.log("Access token: " + token + "\nUrl: " + graphUser_API);
+						$.ajax({
+							type: 'GET',
+							url: graphUser_API,
+							crossDomain: true,
+							dataType: 'json',
+							success: function(response){
+								console.log(response);
+								name = response.name;
+								email = response.email; 
+								data = {email: email};
+								for (var i = 0; i < response.languages.length; i ++){
+										languages.push(response.languages[i].name); 
+								}
+								locationName = response.location.name;
+								fbUrl = response.link; 
+								$.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
+								if(response.result == 'Error'){
+									var geocoder = new google.maps.Geocoder();
+									//console.log(location);
+									geocoder.geocode({address:locationName},function(geocoderResults,geocoderStatus){
+									 	if(geocoderResults.length == 0){
+									     	console.log("geocoderError");
+									 	} else {
+										     data = {
+										     		 email:email, 
+												     name:name, 
+												     languages:languages, 
+												     locationString:locationName, 
+												     lat:geocoderResults[0].geometry.location.lat(), 
+												     lng:geocoderResults[0].geometry.location.lng(), fbUrl:fbUrl
+										     };
+										     console.log("About to doublepost");
+										     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signUp", data, function(response){
+											     if(response.result == "Error"){
+												     console.log("New Account Error");
+											     } else {
+												     console.log("New Account Success!");
+											     }
+										     });
+										 }
+									});
+								}
+							});
+ 
+				      },
+						    error: function (responseData, textStatus, errorThrown) {
+						        console.log('GET failed.');
+						    }
+						});
+				      
+				      
+				      
+				      
+				     
+				      				      
+				      //query the signin api  - on "error" go to "api/signup"; on "success" go to map view
+				      
 				    } else if (response.status === 'not_authorized') {
-				      // In this case, the person is logged into Facebook, but not into the app, so we call
-				      // FB.login() to prompt them to do so. 
-				      // In real-life usage, you wouldn't want to immediately prompt someone to login 
-				      // like this, for two reasons:
-				      // (1) JavaScript created popup windows are blocked by most browsers unless they 
-				      // result from direct interaction from people using the app (such as a mouse click)
-				      // (2) it is a bad experience to be continually prompted to login upon page load.
+				      
+				      
 				      FB.login();
 				    } else {
-				      // In this case, the person is not logged into Facebook, so we call the login() 
-				      // function to prompt them to do so. Note that at this stage there is no indication
-				      // of whether they are logged into the app. If they aren't then they'll see the Login
-				      // dialog right after they log in to Facebook. 
-				      // The same caveats as above apply to the FB.login() call here.
+				      
+				      
 				      FB.login();
 				    }
 				  });
@@ -87,30 +142,34 @@
 	<div class="navbar"><a class="brand">Brand</a></div>
 	<div class="navbar navbar-inverse navbar-fixed-top">
 	    <div class="container">
-		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-		    <span class="icon-bar"></span>
-		    <span class="icon-bar"></span>
-		    <span class="icon-bar"></span>
-		</button>
-		<a class="navbar-brand" href="#">Hello, World!</a>
-		<div class="nav-collapse collapse">
-		    <ul class="nav navbar-nav">
-			<li><a href="#contact">About</a></li>
-		    </ul>
-		    <div class="fb-login-button" show-faces="false"></div><!--/.nav-collapse -->
-		</div>
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+			    <span class="icon-bar"></span>
+			    <span class="icon-bar"></span>
+			    <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Hello, World!</a>
+			<div class="nav-collapse collapse">
+			    <ul class="nav navbar-nav">
+				<li><a href="#contact">About</a></li>
+			    </ul>
+			    <!--/.nav-collapse -->
+			</div>
 	    </div>
 	</div>
 	
+<!-- Login div -->
 	<div class="enter-body">
 	    <div id="enter-content">
-		<div id="logo">
-		    <i id="enter-logo"></i><i id="rotating-world"></i>
-		</div>
-		<a href="" id="login">login &#9658;</a>
+			<div id="logo"><i id="enter-logo"></i><i id="rotating-world"></i></div>
+			<div class="fb-login-button" show-faces="false"></div>
+<!-- 		<a href="" id="login">login &#9658;</a> -->
 	    </div>
-	</div>
-
+    </div>
+    
+<!--   Map view div   -->
+    <div class="">
+	    
+	    
     </div>
     
 	</body>
