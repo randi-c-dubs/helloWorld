@@ -1,18 +1,36 @@
 body {
     font-family:abeatbyKai, sans-serif;
+    overflow:hidden;
 }
 
-#map{
-    width:400px;
-    height:600px;
+#tiny-logo {
+    content:url(logo_white.png);
+    height:75px;
+}
+
+.navbar-nav {
+    margin-top:20px;
+}
+
+#left {
+    margin-left:500px;
+}
+
+#filters {
+}
+
+#map {
+    height:100%;
+    width:100%;
 }
 
 /* Main logo */
 .enter-body {
-    background:white url(worldmap.png);
+    background:white url(worldmap.png) 500px 0;
     background-size:cover;
-    height:800px;
-    width:1000px;
+    display:none;
+    height:1500px;
+    width:100%;
     margin:0 auto;
     padding:150px;
 }
@@ -44,11 +62,12 @@ body {
     margin-left:-20px;
 }
 #login {
-    border-radius:10px;
     font-family:abeatbyKai, sans-serif;
     transition:all 250ms ease-in;
-    position:absolute;
+    border:5px solid black;
     text-decoration:none;
+    border-radius:10px;
+    position:absolute;
     background:black;
     line-height:60px;
     font-size:40px;
@@ -59,10 +78,13 @@ body {
     margin-left:150px;
 }
 #login:hover {
-    border:5px solid black;
     background:#ddee99;
     color:black;
 }
 #login:active {
     background:#77bbdd;
+}
+
+.show {
+    display:block;
 }
