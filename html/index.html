@@ -17,6 +17,7 @@
 		<div id="fb-root"></div>
 	<!-- **	<script src="//connect.facebook.net/en_US/all.js"></script> -->
 		<script>
+
 		function runJS() {
 			var token;
 			var name;
@@ -45,111 +46,112 @@
 			function hideEnter() {
 				$('.enter-body').removeClass('show');
 				console.log('This worked');
-			}
-			
-			
-			/* End Google Map API */
-			
-			/****var graphUser_API = "https://graph.facebook.com/me?fields=name,email,languages,location,link&access_token=";
-	
-	
-	/* FB authentication 
-	************************************************************************************
-	*/
-			 /**** window.fbAsyncInit = function() {
-			    // init the FB JS SDK
-			    FB.init({
-			      appId      : '540749739313645',                        // App ID from the app dashboard
-			      cookie     : true,
-			      status     : true,                                 // Check Facebook Login status
-			      xfbml      : true                                  // Look for social plugins on the page
-			    });
-			
-			    // Additional initialization code such as adding Event Listeners goes here
-				FB.Event.subscribe('auth.login', function(response) {
-					    // Here we specify what we do with the response anytime this event occurs. 
-					    if (response.status === 'connected') {
-						    console.log("inside of the IF!!!!");
-					      token = response.authResponse.accessToken;
-					      graphUser_API += token;
-					      $.get(graphUser_API, function(response){
-						  console.log(response);
-						      name = response.name;
-						      console.log(name); 
-						      email = response.email; 
-						      console.log(email); 
-						      data = {email: email};
-						      for (var i = 0; i < response.languages.length; i ++){
-								languages.push(response.languages[i].name); 
-						      }
-						      location = response.location.name;
-						      console.log(location); 
-						      fbUrl = response.link; 
-							     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
-								     if(response.result == 'Error'){
+
+
+/* FB authentication 
+************************************************************************************
+*/
+		  window.fbAsyncInit = function() {
+		    // init the FB JS SDK
+		    FB.init({
+		      appId      : '540749739313645',                        // App ID from the app dashboard
+		      cookie     : true,
+		      status     : true,                                 // Check Facebook Login status
+		      xfbml      : true                                  // Look for social plugins on the page
+		    });
+		
+		    // Additional initialization code such as adding Event Listeners goes here
+			    FB.Event.subscribe('auth.login', function(response) {
+				    // Here we specify what we do with the response anytime this event occurs. 
+				    if (response.status === 'connected') {
+						token = response.authResponse.accessToken;
+						graphUser_API += token;
+						console.log("Access token: " + token + "\nUrl: " + graphUser_API);
+						$.ajax({
+							type: 'GET',
+							url: graphUser_API,
+							crossDomain: true,
+							dataType: 'json',
+							success: function(response){
+								console.log(response);
+								name = response.name;
+								email = response.email; 
+								data = {email: email};
+								for (var i = 0; i < response.languages.length; i ++){
+										languages.push(response.languages[i].name); 
+								}
+								locationName = response.location.name;
+								fbUrl = response.link; 
+								$.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
+								if(response.result == 'Error'){
 									var geocoder = new google.maps.Geocoder();
-			// 					     	var geocoderRequest = new google.maps.GeocoderRequest(); 
-			// 					     	geocoderRequest.address = location; 
-									console.log(location);
-									/*
-	geocoder.geocode({address:location},function(geocoderResults,geocoderStatus){
-											if(geocoderResults.length == 0){
-												console.log("geocoderError");
-											}else{
-											 
-											     data = {
-											     
-	email:email, 
-													     name:name, 
-													     languages:languages, 
-													     locationString:location, 
-													     lat:geocoderResults[0].geometry.location.lat(), 
-													     lng:result.latlng[0][1], fbUrl:fbUrl
-	
-											     };
-											     $.post("http:ec2-75-101-252-133.compute-1.amazonaws.com/api/signUp", data, function(response){
-												     if(response.result == "Error"){
-													     console.log("New Account Error");
-												     }else{
-													     console.log("Success!");
-												     }
-												     return;
-											     });
-											}
-										});
-	*/
-				/****					     }
-						      });
-	 
-					      });
-									      
-					      //query the signin api  - on "error" go to "api/signup"; on "success" go to map view
-					      
-					    } else if (response.status === 'not_authorized') {
-					      
-					      
-					      FB.login();
-					    } else {
-					      
-					      
-					      FB.login();
-					    }
-					  });
-			  };
-			  
-			  
-	/* 	FB API state change and events   
-	************************************************************************************
-	*/		
-			
-			  // Load the SDK asynchronously
-		/****	  (function(d, s, id){
-			     var js, fjs = d.getElementsByTagName(s)[0];
-			     if (d.getElementById(id)) {return;}
-			     js = d.createElement(s); js.id = id;
-			     js.src = "//connect.facebook.net/en_US/all.js";
-			     fjs.parentNode.insertBefore(js, fjs);
-			   }(document, 'script', 'facebook-jssdk'));
+									//console.log(location);
+									geocoder.geocode({address:locationName},function(geocoderResults,geocoderStatus){
+									 	if(geocoderResults.length == 0){
+									     	console.log("geocoderError");
+									 	} else {
+										     data = {
+										     		 email:email, 
+												     name:name, 
+												     languages:languages, 
+												     locationString:locationName, 
+												     lat:geocoderResults[0].geometry.location.lat(), 
+												     lng:geocoderResults[0].geometry.location.lng(), fbUrl:fbUrl
+										     };
+										     console.log("About to doublepost");
+										     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signUp", data, function(response){
+											     if(response.result == "Error"){
+												     console.log("New Account Error");
+											     } else {
+												     console.log("New Account Success!");
+											     }
+										     });
+										 }
+									});
+								}
+							});
+ 
+				      },
+						    error: function (responseData, textStatus, errorThrown) {
+						        console.log('GET failed.');
+						    }
+						});
+				      
+				      
+				      
+				      
+				     
+				      				      
+				      //query the signin api  - on "error" go to "api/signup"; on "success" go to map view
+				      
+				    } else if (response.status === 'not_authorized') {
+				      
+				      
+				      FB.login();
+				    } else {
+				      
+				      
+				      FB.login();
+				    }
+				  });
+		  };
+		  
+		  
+/* 	FB API state change and events   
+************************************************************************************
+*/		
+		
+		  // Load the SDK asynchronously
+		  (function(d, s, id){
+		     var js, fjs = d.getElementsByTagName(s)[0];
+		     if (d.getElementById(id)) {return;}
+		     js = d.createElement(s); js.id = id;
+		     js.src = "//connect.facebook.net/en_US/all.js";
+		     fjs.parentNode.insertBefore(js, fjs);
+		   }(document, 'script', 'facebook-jssdk'));
+		   
+		   FB.api('/me', function(response){
+>>>>>>> 0b838e10ef25d9b3f27b031e966f55566d99da24
 			   
 			   FB.api('/me', function(response){
 				   

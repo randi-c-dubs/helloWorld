@@ -9,7 +9,7 @@ var app = express();
 app.use(express.bodyParser());
 
 // Mongo
-mongoose.connect("mongodb://localhost/caliban");
+mongoose.connect("mongodb://localhost/helloWorld");
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "Connection error:"));
 db.once("open", function callback() {
