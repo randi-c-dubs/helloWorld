@@ -62,8 +62,11 @@
 				      var data = {email:email};
 				      $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
 					     if(response.result == 'Error'){
-					     	(new google.maps.Geocoder()).geocode((new google.maps.GeocoderRequest()).address=location,
-						     	function(geocoderResults,geocoderStatus){
+					     	var geocoder = new google.maps.Geocoder();
+					     	var geocoderRequest = new google.maps.GeocoderRequest();
+					     	geocoderRequest.address = location;
+					     	
+					     	geocoder.geocode(geocoderRequest,function(geocoderResults,geocoderStatus){
 							     	if(geocoderResults.length == 0){
 								     	console.log("geocoderError");
 							     	}else{
