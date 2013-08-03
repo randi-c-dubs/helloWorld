@@ -2,21 +2,24 @@ body {
     font-family:abeatbyKai, sans-serif;
     overflow:hidden;
 }
+
 #tiny-logo {
     content:url(logo_white.png);
     height:75px;
 }
+
 .navbar-nav {
     margin-top:20px;
 }
+
 #left {
     margin-left:500px;
 }
+
 #filters {
-    display:none;
 }
+
 #map {
-    margin:-25px 0;
     height:100%;
     width:100%;
 }
