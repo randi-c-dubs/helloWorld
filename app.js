@@ -29,8 +29,16 @@ app.post("/api/signIn", function(req, res) {
 	User.signIn(req, res);
 });
 
+app.post("/api/editUser", function(req, res) {
+	User.editUser(req, res);
+});
+
 app.post("/api/newProject", function(req, res) {
 	Project.newProject(req, res);
+});
+
+app.post("/api/deleteProject", function(req, res) {
+	Project.deleteProject
 });
 
 app.post("/api/getFiltered", function(req, res) {
