@@ -85,7 +85,6 @@
 								$.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
 								if(response.result == 'Error'){
 									var geocoder = new google.maps.Geocoder();
-									//console.log(location);
 									geocoder.geocode({address:locationName},function(geocoderResults,geocoderStatus){
 									 	if(geocoderResults.length == 0){
 									     	console.log("geocoderError");
@@ -96,18 +95,21 @@
 												     languages:languages, 
 												     locationString:locationName, 
 												     lat:geocoderResults[0].geometry.location.lat(), 
-												     lng:geocoderResults[0].geometry.location.lng(), fbUrl:fbUrl
+												     lng:geocoderResults[0].geometry.location.lng(), 
+												     fbUrl:fbUrl
 										     };
 										     console.log("About to doublepost");
 										     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signUp", data, function(response){
 											     if(response.result == "Error"){
-												     console.log("New Account Error");
+												     console.log("New Account Error: " + response.payload);
 											     } else {
-												     console.log("New Account Success!");
+												     
 											     }
 										     });
 										 }
 									});
+								}else{		//Remove the welcome screen and flash the map view
+									alert("You successfully Signed in!!!");
 								}
 							});
  
@@ -115,22 +117,12 @@
 						    error: function (responseData, textStatus, errorThrown) {
 						        console.log('GET failed.');
 						    }
-						});
-				      
-				      
-				      
-				      
-				     
-				      				      
+						});		      
 				      //query the signin api  - on "error" go to "api/signup"; on "success" go to map view
 				      
 				    } else if (response.status === 'not_authorized') {
-				      
-				      
 				      FB.login();
 				    } else {
-				      
-				      
 				      FB.login();
 				    }
 				  });
