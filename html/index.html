@@ -62,28 +62,28 @@
 				      var data = {email:email};
 				      $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
 					     if(response.result == 'Error'){
-					     	var geocoder = (new google.maps.Geocoder()).geocode((new google.maps.GeocoderRequest()).address=location,
-					     	function(geocoderResults,geocoderStatus){
-						     	if(geocoderResults.length == 0){
-							     	console.log("geocoderError");
-						     	}else{
-						     	 
-							     data = {email:email, 
-									     name:name, 
-									     languages:languages, 
-									     locationString:location, 
-									     lat:geocoderResults[0].geometry.location.lat(), 
-									     lng:result.latlng[0][1], fbUrl:fbUrl
-							     };
-							     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signUp", data, function(response){
-								     if(response.result == "Error"){
-									     console.log("New Account Error");
-								     }else{
-									     console.log("Success!");
-								     }
-							     });
-						     	}
-					     	});
+					     	(new google.maps.Geocoder()).geocode((new google.maps.GeocoderRequest()).address=location,
+						     	function(geocoderResults,geocoderStatus){
+							     	if(geocoderResults.length == 0){
+								     	console.log("geocoderError");
+							     	}else{
+							     	 
+								     data = {email:email, 
+										     name:name, 
+										     languages:languages, 
+										     locationString:location, 
+										     lat:geocoderResults[0].geometry.location.lat(), 
+										     lng:result.latlng[0][1], fbUrl:fbUrl
+								     };
+								     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signUp", data, function(response){
+									     if(response.result == "Error"){
+										     console.log("New Account Error");
+									     }else{
+										     console.log("Success!");
+									     }
+								     });
+							     	}
+						     	});
 					     }
 				      });
 				      
