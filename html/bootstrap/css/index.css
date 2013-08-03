@@ -3,10 +3,6 @@ body {
     overflow:hidden;
 }
 
-#tiny-logo {
-    content:url(logo_white.png);
-    height:75px;
-}
 
 .navbar-nav {
     margin-top:20px;
@@ -23,7 +19,7 @@ body {
     height:100%;
     width:100%;
     position: absolute;
-    z-index: -1;
+    z-index: 0;
 }
 
 /* Main logo */
@@ -79,7 +75,6 @@ body {
     margin-top:-60px;
     margin-left:150px;
     
-    z-index: 1;
 }
 #login:hover {
     background:#ddee99;
