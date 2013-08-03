@@ -46,7 +46,7 @@
 				    // Here we specify what we do with the response anytime this event occurs. 
 				    if (response.status === 'connected') {
 					    console.log("inside of the IF!!!!");
-				      /*token = response.authResponse.accessToken;
+				      token = response.authResponse.accessToken;
 				      graphUser_API += token;
 				      $.get(graphUser_API, function(response){
 				          console.log(response);
@@ -88,14 +88,14 @@
 										     });
 									     	}
 								     	});
-								     }*/
+								     }
 					      });
  
 				      });
 				      				      
 				      //query the signin api  - on "error" go to "api/signup"; on "success" go to map view
 				      
-				    }/* else if (response.status === 'not_authorized') {
+				    } else if (response.status === 'not_authorized') {
 				      
 				      
 				      FB.login();
@@ -103,7 +103,7 @@
 				      
 				      
 				      FB.login();
-				    }*/
+				    }
 				  });
 		  };
 		  
