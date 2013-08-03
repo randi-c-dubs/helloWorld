@@ -78,7 +78,8 @@
 						case "loggedIn":
 							this.state = "loggedIn";
 							this.switchUI(this.state);
-							$(".loggedOut-module").fadeIn();
+							$(".loggedOut-module").fadeOut();
+							setMarkers(this.results);
 					}
 				};
 
@@ -91,39 +92,6 @@
 				};
 			}
 
-			var helloWorld = new App();
-		</script>
-
-
-		<script>
-
-		function runJS() {
-			var token;
-			var name;
-			var email;
-			var languages = [];
-			var location;
-			var lat;
-			var lng;
-			var fbUrl;
-
-			var graphUser_API = "https://graph.facebook.com/me?fields=name,email,languages,location,link&access_token=";
-
-			/* Google Map API */
-			function createMarker(point,html) {
-			    var marker = new GMarker(point);
-			    GEvent.addListener(marker, "click", function() {
-				marker.openInfoWindowHtml(html);
-			     });
-			    return marker;
-			}
-
-			// Used to place map on screen
-			var map = new GMap2(document.getElementById("map"));
-			map.addControl(new GLargeMapControl());
-			map.addControl(new GMapTypeControl());
-			map.setCenter(new GLatLng(43.907787,-50.26),3);
-			
 			function setMarkers(people) {
 				for (var i=0; i<people.length; i++) {
 					setTimeout( function(people, i) {
@@ -136,8 +104,43 @@
 					}}(people, i), 250*i);
 				}
 			}
-			
-			setMarkers(helloWorld.results);
+
+			/* Google Map API */
+			function createMarker(point,html) {
+			    var marker = new GMarker(point);
+			    GEvent.addListener(marker, "click", function() {
+				marker.openInfoWindowHtml(html);
+			     });
+			    return marker;
+			}
+
+			var helloWorld = new App();
+		</script>
+
+
+		<script>
+		var map;
+		function runJS() {
+			var token;
+			var name;
+			var email;
+			var languages = [];
+			var location;
+			var lat;
+			var lng;
+			var fbUrl;
+
+			var graphUser_API = "https://graph.facebook.com/me?fields=name,email,languages,location,link&access_token=";
+
+
+
+			// Used to place map on screen
+			map = new GMap2(document.getElementById("map"));
+			map.addControl(new GLargeMapControl());
+			map.addControl(new GMapTypeControl());
+			map.setCenter(new GLatLng(43.907787,-50.26),3);
+
+
 
 			function hideEnter() {
 				$('.enter-body').removeClass('show');
