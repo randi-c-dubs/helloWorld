@@ -8,7 +8,7 @@ var userSchema = mongoose.Schema({
 	skills: [{type:String}],
 	projects: [{type:mongoose.Schema.Types.ObjectId, ref:"Project"}],
 	githubUrl: {type:String},
-	location: {type:String, required: true},
+	locationString: {type:String, required: true},
 	lat: {type:Number, required:true},
 	lng: {type:Number, required:true}
 })
@@ -19,7 +19,7 @@ userSchema.statics.signUp = function(req, res) {
 	var token = req.body.token;
 	var name = req.body.name;
 	var email = req.body.email;
-	var languages = JSON.parse(typeof req.body.languages === "undefined" ? "[]" : req.body.languages);
+	var languages = req.body.languages === "undefined" ? [] : req.body.languages;
 	var lat = req.body.lat;
 	var lng = req.body.lng;
 	var locationString = req.body.locationString;
@@ -36,7 +36,7 @@ userSchema.statics.signUp = function(req, res) {
 		fbUrl: fbUrl
 	});
 	user.save(function(err, result) {
-		if (err) res.send({result: "Error"});
+		if (err) res.send({result: "Error", payload: err});
 		else res.send({result: "Success"});
 	});
 }
