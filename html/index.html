@@ -48,7 +48,12 @@
 				      token = response.authResponse.accessToken;
 				      graphUser_API += token;
 				      console.log("Access token: " + token + "\nUrl: " + graphUser_API);
-				      $.get(graphUser_API, function(response){
+				      $.ajax({
+						    type: 'GET',
+						    url: graphUser_API,
+						    crossDomain: true,
+						    dataType: 'json',
+						    success: function(response){
 				          console.log(response);
  					      name = response.name;
  					      email = response.email; 
@@ -86,7 +91,16 @@
 								     }
 					      });
  
-				      });
+				      },
+						    error: function (responseData, textStatus, errorThrown) {
+						        console.log('GET failed.');
+						    }
+						});
+				      
+				      
+				      
+				      
+				     
 				      				      
 				      //query the signin api  - on "error" go to "api/signup"; on "success" go to map view
 				      
