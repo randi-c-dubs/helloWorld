@@ -1,0 +1,126 @@
+body {
+    font-family:abeatbyKai, sans-serif;
+}
+
+#map{
+    width:400px;
+    height: 600px;
+}
+.project-frame {
+  font-family:abeatbyKai, sans-serif;
+  border-radius:10px;
+  background:white;
+  line-height:50px;
+  font-size:40px;
+  padding:25px;
+  color:#686868;
+}
+.form {
+  margin:0 auto;
+  width:95%;
+}
+.form-area {
+  margin:25px 0;
+}
+#error {
+  transition: all 250ms ease-in;
+  border:10px solid red;
+  border-radius:10px;
+  text-align:center;
+  background:#f08080;
+  line-height:30px;
+  font-size:16px;
+  padding:15px;
+  color:black;
+}
+.show {
+  display:none;
+}
+.text-item {
+  transition: all 250ms ease-in;
+  border:3px solid #686868;
+  background:transparent;
+  border-radius:5px;
+  font-size:30px;
+  padding:5px 20px;
+  color:#686868;
+  height:40px;
+  width:100%;
+}
+.text-item:hover {
+  background:#77bbdd;
+}
+.text-item:focus {
+  background:#ddee99;
+}
+#brief-description {
+  height:200px;
+}
+.skill {
+  margin-bottom:5px;
+  width:100%;
+}
+.project-button {
+  transition: all 250ms ease-in;
+  border:3px solid #686868;
+  font-family:abeatbyKai;
+  background:transparent;
+  font-weight:bolder;
+  line-height:25px;
+  border-radius:5px;
+  font-size:15px;
+  margin-right:10px;
+  color:#686868;
+  height:30px;
+  width:100px;
+}
+.project-button:hover {
+  background:#77bbdd;
+  color:black;
+}
+
+.enter-body {
+    background:white url(worldmap.png);
+    background-size:cover;
+}
+#enter-content {
+    border:15px solid #686868;
+    margin:150px auto;
+    border-radius:15px;
+    text-align:center;
+    background:white;
+    height:650px;
+    width:1000px;
+    
+}
+#logo {
+    text-align:center;
+    margin:100px;
+}
+#enter-logo {
+    content:url(logo_short.png);
+    margin:0 auto;
+}
+#rotating-world{
+    display:inline-block;
+    content: url(rotating_globe_00769.gif);
+    height:250px;
+    width:250px;
+}
+#login {
+    font-family:abeatbyKai, sans-serif;
+    transition:all 250ms ease-in;
+    text-decoration: none;
+    background:#686868;
+    font-size:40px;
+    padding:15px;
+    color:white;
+}
+#login:hover {
+    border:5px solid #686868;
+    background:#ddee99;
+    color:#686868;
+}
+#login:active {
+    background:#77bbdd;
+}
