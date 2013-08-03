@@ -1,20 +1,17 @@
 <html>
 	<head> 
-		<script src="http://code.jquery.com/jquery.js"></script>
+	    <script src="http://code.jquery.com/jquery.js"></script>
 	    <script src="bootstrap/js/bootstrap.min.js"></script>
 	    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 
 
 	    <!-- 	Map box client side libraries     -->
 	    <link href='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet' />
+	    <link href="bootstrap/css/index.css" rel="stylesheet">
 	    <script src='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
-
 	</head>
+	
 	<style>
-		#map{
-			width:400px;
-			height: 600px;
-		}
 	</style>
 	
 	<body>
@@ -89,20 +86,31 @@
 	<div id="fb-root" class="pull-right"></div>
 	<div class="navbar"><a class="brand">Brand</a></div>
 		<div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Hello, World!</a>
-        <div class="nav-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="#contact">About</a></li>
-          </ul>
-          <div class="fb-login-button" show-faces="false">
-        </div><!--/.nav-collapse -->
-      </div>
+	<div class="container">
+	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+            </button>
+	    <a class="navbar-brand" href="#">Hello, World!</a>
+		<div class="nav-collapse collapse">
+	 	    <ul class="nav navbar-nav">
+		        <li><a href="#contact">About</a></li>
+		    </ul>
+		    <div class="fb-login-button" show-faces="false">
+		    </div><!--/.nav-collapse -->
+		</div>
+	</div>
+		</div>
+    <div class="enter-body">
+        <div id="enter-content">
+            <div id="logo">
+                <i id="enter-logo"></i><i id="rotating-world"></i>
+            </div>
+            <a href="" id="login">login &#9658;</a>
+        </div>
+    </div>
+
     </div>
     
 	</body>
