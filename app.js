@@ -29,6 +29,6 @@ app.get("/api/signIn", function(req, res) {
 	User.signIn(req, res);
 });
 
-app.get("api/newProject", function(req, res) {
+app.get("/api/newProject", function(req, res) {
 	Project.newProject(req, res);
 });
