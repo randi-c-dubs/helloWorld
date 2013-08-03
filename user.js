@@ -70,9 +70,7 @@ userSchema.statics.signIn = function(req, res) {
 	})
 }
 
-/** Instance methods **/
-
-userSchema.methods.getFiltered = function(req, res) {
+userSchema.statics.getFiltered = function(req, res) {
 	var skills = typeof req.body.skills === "undefined" ? [] : req.body.skills;
 	var languages = typeof req.body.languages === "undefined" ? [] : req.body.languages;
 	var topLeftLat = req.body.topLeftLat == "" ? 0 : req.body.topLeftLat;
@@ -90,6 +88,8 @@ userSchema.methods.getFiltered = function(req, res) {
 		else res.send({result: "Success", payload: users})
 	});
 }
+
+/** Instance methods **/
 
 /* DB Hooks */
 
