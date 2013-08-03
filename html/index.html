@@ -45,13 +45,15 @@
 		    // Additional initialization code such as adding Event Listeners goes here
 		    	FB.Event.subscribe('auth.login', function(response) {
 				    // Here we specify what we do with the response anytime this event occurs. 
-				    console.log(response.status);
 				    if (response.status === 'connected') {
 					    console.log("inside of the IF!!!!");
 				      token = response.authResponse.accessToken;
 				      $.get(graphUser_API, function(response){
+				          console.log(response);
 					      name = response.name;
+					      console.log(name);
 					      email = response.email;
+					      console.log(email);
 					      for (var i = 0; i < response.languages.length; i ++){
 					      		languages.push(response.languages[i].name);
 					      }
