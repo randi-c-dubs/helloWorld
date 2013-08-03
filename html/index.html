@@ -21,7 +21,7 @@
 		var name;
 		var email;
 		var languages = [];
-		var location;
+		var locationName;
 		var lat;
 		var lng;
 		var fbUrl;
@@ -56,7 +56,7 @@
 					      for (var i = 0; i < response.languages.length; i ++){
  					      		languages.push(response.languages[i].name); 
 					      }
- 					      //location = response.location.name;
+ 					      locationName = response.location.name;
  					      fbUrl = response.link; 
 						     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
 							     if(response.result == 'Error'){
