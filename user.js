@@ -36,7 +36,7 @@ userSchema.statics.signUp = function(req, res) {
 		fbUrl: fbUrl
 	});
 	user.save(function(err, result) {
-		if (err) res.send({result: "Error"});
+		if (err) res.send({result: "Error", payload: err});
 		else res.send({result: "Success"});
 	});
 }
