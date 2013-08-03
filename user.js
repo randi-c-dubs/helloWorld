@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 var userSchema = mongoose.Schema({
-	token: {type:String, unique:true}
+	token: {type:String, unique:true},
 	name: {type:String, required:true},
 	email: {type:String, required:true},
 	languages: [{type:String}],
