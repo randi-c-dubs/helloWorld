@@ -42,35 +42,35 @@
 		    });
 		
 		    // Additional initialization code such as adding Event Listeners goes here
-		    	FB.Event.subscribe('auth.login', function(response) {
+			    FB.Event.subscribe('auth.login', function(response) {
 				    // Here we specify what we do with the response anytime this event occurs. 
 				    if (response.status === 'connected') {
-				      token = response.authResponse.accessToken;
-				      graphUser_API += token;
-				      console.log("Access token: " + token + "\nUrl: " + graphUser_API);
-				      $.ajax({
-						    type: 'GET',
-						    url: graphUser_API,
-						    crossDomain: true,
-						    dataType: 'json',
-						    success: function(response){
-				          console.log(response);
- 					      name = response.name;
- 					      email = response.email; 
- 					      data = {email: email};
-					      for (var i = 0; i < response.languages.length; i ++){
- 					      		languages.push(response.languages[i].name); 
-					      }
- 					      locationName = response.location.name;
- 					      fbUrl = response.link; 
-						     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
-							     if(response.result == 'Error'){
-							     	var geocoder = new google.maps.Geocoder();
-							     	//console.log(location);
-							     	geocoder.geocode({address:locationName},function(geocoderResults,geocoderStatus){
-									     	if(geocoderResults.length == 0){
-										     	console.log("geocoderError");
-									     	}else{
+						token = response.authResponse.accessToken;
+						graphUser_API += token;
+						console.log("Access token: " + token + "\nUrl: " + graphUser_API);
+						$.ajax({
+							type: 'GET',
+							url: graphUser_API,
+							crossDomain: true,
+							dataType: 'json',
+							success: function(response){
+								console.log(response);
+								name = response.name;
+								email = response.email; 
+								data = {email: email};
+								for (var i = 0; i < response.languages.length; i ++){
+										languages.push(response.languages[i].name); 
+								}
+								locationName = response.location.name;
+								fbUrl = response.link; 
+								$.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
+								if(response.result == 'Error'){
+									var geocoder = new google.maps.Geocoder();
+									//console.log(location);
+									geocoder.geocode({address:locationName},function(geocoderResults,geocoderStatus){
+									 	if(geocoderResults.length == 0){
+									     	console.log("geocoderError");
+									 	} else {
 										     data = {
 										     		 email:email, 
 												     name:name, 
@@ -79,6 +79,7 @@
 												     lat:geocoderResults[0].geometry.location.lat(), 
 												     lng:result.latlng[0][1], fbUrl:fbUrl
 										     };
+										     console.log("About to doublepost");
 										     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signUp", data, function(response){
 											     if(response.result == "Error"){
 												     console.log("New Account Error");
@@ -86,10 +87,10 @@
 												     console.log("New Account Success!");
 											     }
 										     });
-									     	}
-								     	});
-								     }
-					      });
+										 }
+									});
+								}
+							});
  
 				      },
 						    error: function (responseData, textStatus, errorThrown) {
