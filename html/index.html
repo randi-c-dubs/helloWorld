@@ -85,6 +85,7 @@
 										     }else{
 											     console.log("Success!");
 										     }
+										     return;
 									     });
 								     	}
 							     	});
@@ -92,15 +93,8 @@
 					      });
  
 				      });
-				      
-				      var data = {email:email};
 				      				      
 				      //query the signin api  - on "error" go to "api/signup"; on "success" go to map view
-				      
-				      
-				      
-				      //query facebook api for graph user data
-				      graphUser_API += token;
 				      
 				    } else if (response.status === 'not_authorized') {
 				      
