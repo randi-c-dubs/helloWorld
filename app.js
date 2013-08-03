@@ -5,7 +5,6 @@ var User = require('./user');
 /* Initialize */
 // Express & Nunjucks
 var app = express();
-env.express(app);
 app.use(express.bodyParser());
 
 // Mongo
