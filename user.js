@@ -32,9 +32,14 @@ userSchema.statics.signUp = function(req, res) {
 		locationString: locationString,
 		fbUrl: fbUrl
 	});
-	user.save(function(err, result) {
+	user.save(function(err, user) {
 		if (err) res.send({result: "Error", payload: JSON.stringify(err)});
-		else res.send({result: "Success", payload: result});
+		else {
+			user.populate("projects", function(err, populatedUser) {
+				if (err) res.send({result: "Error", payload: JSON.stringify(err)});
+				else res.send({result: "Success", payload: populatedUser});
+			})
+		}
 	});
 }
 
