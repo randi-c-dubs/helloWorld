@@ -43,7 +43,7 @@
 		    });
 		
 		    // Additional initialization code such as adding Event Listeners goes here
-		    	FB.Event.subscribe('auth.authResponseChange', function(response) {
+		    	FB.Event.subscribe('auth.login', function(response) {
 				    // Here we specify what we do with the response anytime this event occurs. 
 				    if (response.status === 'connected') {
 				      token = response.authResponse.accessToken;
