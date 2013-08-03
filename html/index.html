@@ -106,7 +106,14 @@
 				}
 			}
 
-
+			/* Google Map API */
+			function createMarker(point,html) {
+			    var marker = new GMarker(point);
+			    GEvent.addListener(marker, "click", function() {
+				marker.openInfoWindowHtml(html);
+			     });
+			    return marker;
+			}
 
 			var helloWorld = new App();
 		</script>
@@ -126,14 +133,7 @@
 
 			var graphUser_API = "https://graph.facebook.com/me?fields=name,email,languages,location,link&access_token=";
 
-			/* Google Map API */
-			function createMarker(point,html) {
-			    var marker = new GMarker(point);
-			    GEvent.addListener(marker, "click", function() {
-				marker.openInfoWindowHtml(html);
-			     });
-			    return marker;
-			}
+
 
 			// Used to place map on screen
 			var map = new GMap2(document.getElementById("map"));
