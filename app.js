@@ -23,3 +23,4 @@ db.once("open", function callback() {
 app.get("/api/signUp", function(req, res) {
 	User.signUp(req, res);
 });
+

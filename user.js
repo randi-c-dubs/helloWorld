@@ -37,11 +37,40 @@ userSchema.statics.signUp = function(req, res) {
 	});
 	user.save(function(err, result) {
 		if (err) res.send({result: "Error"});
-		else res.send({result: "Success"})
+		else res.send({result: "Success"});
 	});
 }
 
 /* Helpers */
+
+userSchema.statics.signIn = function(req, res) {
+	var token = req.body.token;
+	User.findOne({token: token}, function(err, user) {
+		if (err) res.send({result: "Error"});
+		else {
+			user.populate("projects", function(err, populatedUser) {
+				if (err) res.send({result: "Error"});
+				else {
+					res.send({
+						result: "Success",
+						payload: {
+							name: populatedUser.name,
+							email: populatedUser.email,
+							languages: populatedUser.languages,
+							skills: populatedUser.skills,
+							projects: populatedUser.projects,
+							github: populatedUser.github,
+							lat: populatedUser.lat,
+							lng: populatedUser.lng,
+							locationString: populatedUser.locationString,
+							fbUrl: populatedUser.fbUrl
+						}
+					})
+				}
+			})
+		}
+	})
+}
 
 /** Instance methods **/
 
