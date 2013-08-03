@@ -12,6 +12,9 @@ body {
     margin-left:500px;
 }
 
+#tiny-logo {
+    content:url(logo_white.png);
+}
 #filters {
 }
 
