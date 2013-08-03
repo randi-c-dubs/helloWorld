@@ -6,79 +6,8 @@ body {
     width:400px;
     height: 600px;
 }
-.project-frame {
-  font-family:abeatbyKai, sans-serif;
-  border-radius:10px;
-  background:white;
-  line-height:50px;
-  font-size:40px;
-  padding:25px;
-  color:#686868;
-}
-.form {
-  margin:0 auto;
-  width:95%;
-}
-.form-area {
-  margin:25px 0;
-}
-#error {
-  transition: all 250ms ease-in;
-  border:10px solid red;
-  border-radius:10px;
-  text-align:center;
-  background:#f08080;
-  line-height:30px;
-  font-size:16px;
-  padding:15px;
-  color:black;
-}
-.show {
-  display:none;
-}
-.text-item {
-  transition: all 250ms ease-in;
-  border:3px solid #686868;
-  background:transparent;
-  border-radius:5px;
-  font-size:30px;
-  padding:5px 20px;
-  color:#686868;
-  height:40px;
-  width:100%;
-}
-.text-item:hover {
-  background:#77bbdd;
-}
-.text-item:focus {
-  background:#ddee99;
-}
-#brief-description {
-  height:200px;
-}
-.skill {
-  margin-bottom:5px;
-  width:100%;
-}
-.project-button {
-  transition: all 250ms ease-in;
-  border:3px solid #686868;
-  font-family:abeatbyKai;
-  background:transparent;
-  font-weight:bolder;
-  line-height:25px;
-  border-radius:5px;
-  font-size:15px;
-  margin-right:10px;
-  color:#686868;
-  height:30px;
-  width:100px;
-}
-.project-button:hover {
-  background:#77bbdd;
-  color:black;
-}
 
+/* Main logo */
 .enter-body {
     background:white url(worldmap.png);
     background-size:cover;
