@@ -4,7 +4,6 @@ var User = require("./user.js");
 var projectSchema = mongoose.Schema({
 	name: {type:String, required:true},
 	description: {type:String, required:true},
-	_owner: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
 	skills: [{type:String}]
 })
 
@@ -19,17 +18,34 @@ projectSchema.statics.newProject = function(req, res) {
 		if (err || !user) res.send({result: "Error"});
 		else {
 			var project = new Project({
-				owner: user.id,
 				name: name,
 				description: description,
 				skills: skills
 			});
 			project.save(function(err, result) {
 				if (err) res.send({result: "Error"});
-				else res.send({result: "Success"});
+				else {
+					user.update({$push: {'projects':project.id}}, function(err, user) {
+						if (err) res.send({result: "Error", payload: JSON.stringify(err)});
+						else res.send({result: "Success", payload: project});
+					})
+				}
 			});
 		}
 	});
+}
+
+projectSchema.statics.deleteProject = function(req, res) {
+	var id = typeof req.body.params === "undefined" ? "" : req.body.params;
+	Project.findOneById(id, function(err, project) {
+		if (err) res.send({result: "Error", payload: JSON.stringify(err)});
+		else {
+			project.remove(function(err, project) {
+				if (err) res.send({result: "Error", payload: JSON.stringify(err)});
+				else (err) res.send({result: "Success"});
+			})
+		}
+	})
 }
 
 /** Instance Methods **/

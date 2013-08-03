@@ -34,7 +34,7 @@ userSchema.statics.signUp = function(req, res) {
 	});
 	user.save(function(err, result) {
 		if (err) res.send({result: "Error", payload: JSON.stringify(err)});
-		else res.send({result: "Success"});
+		else res.send({result: "Success", payload: result});
 	});
 }
 
@@ -48,22 +48,22 @@ userSchema.statics.signIn = function(req, res) {
 				else {
 					res.send({
 						result: "Success",
-						payload: {
-							name: populatedUser.name,
-							email: populatedUser.email,
-							languages: populatedUser.languages,
-							skills: populatedUser.skills,
-							projects: populatedUser.projects,
-							github: populatedUser.github,
-							lat: populatedUser.lat,
-							lng: populatedUser.lng,
-							locationString: populatedUser.locationString,
-							fbUrl: populatedUser.fbUrl
-						}
+						payload: populatedUser
 					})
 				}
 			})
 		}
+	})
+}
+
+userSchema.statics.editUser = function(req, res) {
+	var skills = typeof req.body.skills === "undefined" ? [] : req.body.skills
+	var githubUrl = typeof req.body.githubUrl === "undefined" ? "" : req.body.githubUrl
+	var email = typeof req.body.email === "undefined" ? "" : req.body.email
+
+	User.update({email: email}, {skills: skills, githubUrl: githubUrl}, function(err, user) {
+		if (err || email == "") res.send({result: "Error"});
+		else res.send({result: "Success"});
 	})
 }
 
