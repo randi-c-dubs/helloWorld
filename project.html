@@ -1,0 +1,129 @@
+<html>
+  <head>Project Description
+    <style>
+      body {
+        background:silver;
+      }
+      .frame {
+        font-family:abeatbyKai, sans-serif;
+        border-radius:10px;
+        background:white;
+        line-height:50px;
+        font-size:40px;
+        padding:25px;
+        color:#686868;
+      }
+      .form {
+        margin:0 auto;
+        width:95%;
+      }
+      .form-area {
+        margin:25px 0;
+      }
+      #error {
+	transition: all 250ms ease-in;
+        border:10px solid red;
+        border-radius:10px;
+        text-align:center;
+        background:#f08080;
+        line-height:30px;
+        font-size:16px;
+        padding:15px;
+        color:black;
+      }
+      .show {
+        display:none;
+      }
+      .text-item {
+	transition: all 250ms ease-in;
+        border:3px solid #686868;
+        background:transparent;
+        border-radius:5px;
+        font-size:30px;
+        padding:5px 20px;
+        color:#686868;
+        height:40px;
+        width:100%;
+      }
+      .text-item:hover {
+        background:#77bbdd;
+      }
+      .text-item:focus {
+        background:#ddee99;
+      }
+      #brief-description {
+        height:200px;
+      }
+      .skill {
+        margin-bottom:5px;
+        width:100%;
+      }
+      .button {
+	transition: all 250ms ease-in;
+        border:3px solid #686868;
+        font-family:abeatbyKai;
+        background:transparent;
+        font-weight:bolder;
+        line-height:25px;
+        border-radius:5px;
+        font-size:15px;
+        margin-right:10px;
+        color:#686868;
+        height:30px;
+        width:100px;
+      }
+      .button:hover {
+        background:#77bbdd;
+        color:black;
+      }
+    </style>
+
+  </head>
+  <body>
+    <div class="frame">
+      <div class="form">
+        <section id="error" class="show">
+          <strong>Error:</strong> Please fill in at least the title and brief description.
+        </section>
+        <section class="form-area">
+          Title:<br />
+          <textarea id="title" class="text-item"></textarea><br />
+        </section>
+        <section class="form-area">
+          Brief Description:<br />
+          <textarea id="brief-description" class="text-item"></textarea>
+        </section>
+        <section class="form-area">
+          <div id="skills-wrapper">
+            Skills Needed:<br />
+            <textarea class="text-item skill" onfocus="addSkill(this)"></textarea>
+          </div>
+        </section>
+        <button id="submit" class="button" onclick="submit()">Submit</button>
+        <button id="cancel" class="button">Cancel</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    addSkill = function(calling) {
+      var newbox=document.createElement('textarea');
+          div=document.getElementById('skills-wrapper');
+      newbox.setAttribute('class', 'text-item skill');
+      newbox.setAttribute('onfocus', 'addSkill(this)');
+      div.appendChild(newbox);
+      calling.setAttribute('onfocus', '');
+    }
+    submit = function() {
+      if (confirm("Are you sure you want to submit project?")) {
+        var title=document.getElementById('title'),
+            description=document.getElementById('brief-description');
+  
+        if (title.value!='' && description.value!='') {
+          //code that submits project data
+        } else {
+          document.getElementById('error').setAttribute('class', '');
+        }
+      }
+    } 
+</script>
+</html>

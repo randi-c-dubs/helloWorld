@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <style>
+            body {
+                background:white url(worldmap.png);
+                background-size:cover;
+            }
+            #main-content {
+                border:15px solid #686868;
+                margin:150px auto;
+                border-radius:15px;
+                text-align:center;
+                background:white;
+                height:650px;
+                width:1000px;
+                
+            }
+            #logo {
+                text-align:center;
+                margin:100px;
+            }
+            #main-logo {
+                content:url(logo_short.png);
+                margin:0 auto;
+            }
+            #rotating-world{
+                display:inline-block;
+                content: url(rotating_globe_00769.gif);
+                height:250px;
+                width:250px;
+            }
+            #enter {
+                font-family:abeatbyKai, sans-serif;
+                transition:all 250ms ease-in;
+                text-decoration: none;
+                background:#686868;
+                font-size:40px;
+                padding:15px;
+                color:white;
+            }
+            #enter:hover {
+                border:5px solid #686868;
+                background:#ddee99;
+                color:#686868;
+            }
+            #enter:active {
+                background:#77bbdd;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main-content">
+            <div id="logo">
+                <i id="main-logo"></i><i id="rotating-world"></i>
+            </div>
+            <a href="" id="enter">enter &#9658;</a>
+        </div>
+    </body>
+</html>
