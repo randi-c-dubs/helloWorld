@@ -26,7 +26,7 @@
 		var lng;
 		var fbUrl;
 		
-		var graphUser_API = "https://graph.facebook.com/me?fields=name,email,languages,location,link&access_token=";
+		var graphUser_API = "https://graph.facebook.com/me?fields=name,email,languages,location,link&access_token=CAACEdEose0cBAMJ3gAIM9U8cyyLTp5cRp8eNgr753vbN98YEB0LGIO59A1jE9OQcE4nQPY4MXwsTlcYh6PpI2feu67znihGNwbiS4qssBZA8Fe10bVEzRhZCr0g2iLqNpikel6cMhPCSVO6Rgbxq7UG0D9WEau3gGPGODmkgZDZD";
 
 
 /* FB authentication 
@@ -47,7 +47,7 @@
 				    if (response.status === 'connected') {
 					    console.log("inside of the IF!!!!");
 				      token = response.authResponse.accessToken;
-				      graphUser_API += token;
+				      //graphUser_API += token;
 				      $.get(graphUser_API, function(response){
 				          console.log(response);
  					      name = response.name;
@@ -61,8 +61,8 @@
 						     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
 							     if(response.result == 'Error'){
 							     	var geocoder = new google.maps.Geocoder();
-		// 					     	var geocoderRequest = new google.maps.GeocoderRequest(); 
-		// 					     	geocoderRequest.address = location; 
+		 					     	var geocoderRequest = new google.maps.GeocoderRequest(); 
+		 					     	geocoderRequest.address = location; 
 							     	console.log(location);
 							     	/*
 geocoder.geocode({address:location},function(geocoderResults,geocoderStatus){
