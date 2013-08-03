@@ -73,10 +73,10 @@ userSchema.statics.signIn = function(req, res) {
 userSchema.statics.getFiltered = function(req, res) {
 	var skills = typeof req.body.skills === "undefined" ? [] : req.body.skills;
 	var languages = typeof req.body.languages === "undefined" ? [] : req.body.languages;
-	var topLeftLat = typeof req.body.topLeftLat === "" ? 0 : req.body.topLeftLat;
-	var topLeftLng = typeof req.body.topLeftLng === "" ? 0 : req.body.topLeftLng;
-	var bottomRightLat = typeof req.body.bottomRightLat === "" ? 0 : req.body.bottomRightLat;
-	var bottomRightLng = typeof req.body.bottomRighttLng === "" ? 0 : req.body.bottomRighttLng;
+	var topLeftLat = typeof req.body.topLeftLat === "undefined" ? 0 : req.body.topLeftLat;
+	var topLeftLng = typeof req.body.topLeftLng === "undefined" ? 0 : req.body.topLeftLng;
+	var bottomRightLat = typeof req.body.bottomRightLat === "undefined" ? 0 : req.body.bottomRightLat;
+	var bottomRightLng = typeof req.body.bottomRighttLng === "undefined" ? 0 : req.body.bottomRighttLng;
 
 	User.find({
 		skills : {$in: skills},
