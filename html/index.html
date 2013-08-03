@@ -82,9 +82,9 @@
 										     console.log("About to doublepost");
 										     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signUp", data, function(response){
 											     if(response.result == "Error"){
-												     console.log("New Account Error");
+												     console.log("New Account Error: " + response.payload);
 											     } else {
-												     console.log("New Account Success!");
+												     
 											     }
 										     });
 										 }
@@ -98,22 +98,12 @@
 						    error: function (responseData, textStatus, errorThrown) {
 						        console.log('GET failed.');
 						    }
-						});
-				      
-				      
-				      
-				      
-				     
-				      				      
+						});		      
 				      //query the signin api  - on "error" go to "api/signup"; on "success" go to map view
 				      
 				    } else if (response.status === 'not_authorized') {
-				      
-				      
 				      FB.login();
 				    } else {
-				      
-				      
 				      FB.login();
 				    }
 				  });
