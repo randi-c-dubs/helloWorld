@@ -1,7 +1,6 @@
 var mongoose = require("mongoose");
 
 var userSchema = mongoose.Schema({
-	token: {type:String, unique:true},
 	name: {type:String, required:true},
 	email: {type:String, required:true},
 	languages: [{type:String}],
@@ -16,7 +15,6 @@ var userSchema = mongoose.Schema({
 /** Class methods **/
 /* Controllers */
 userSchema.statics.signUp = function(req, res) {
-	var token = req.body.token;
 	var name = req.body.name;
 	var email = req.body.email;
 	var languages = req.body.languages === "undefined" ? [] : req.body.languages;
@@ -26,7 +24,6 @@ userSchema.statics.signUp = function(req, res) {
 	var fbUrl = req.body.fbUrl;
 
 	var user = new User({
-		token: token,
 		name: name,
 		email: email,
 		languages: languages,
@@ -42,8 +39,8 @@ userSchema.statics.signUp = function(req, res) {
 }
 
 userSchema.statics.signIn = function(req, res) {
-	var token = req.body.token;
-	User.findOne({token: token}, function(err, user) {
+	var email = req.body.email;
+	User.findOne({email: email}, function(err, user) {
 		if (err || !user) res.send({result: "Error"});
 		else {
 			user.populate("projects", function(err, populatedUser) {
