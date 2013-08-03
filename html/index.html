@@ -5,168 +5,196 @@
 	    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	    <link href="bootstrap/css/index.css" rel="stylesheet">
 	    
-	    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAPDUET0Qt7p2VcSk6JNU1sBSM5jMcmVqUpI7aqV44cW1cEECiThQYkcZUPRJn9vy_TWxWvuLoOfSFBw" type="text/javascript"></script>
 	    
 	</head>
 	
 	<style>
 	</style>
 	
-	<body>
+	<body onload="runJS()">
 		<!--Facebok authentication-->
 		<div id="fb-root"></div>
-		<script src="//connect.facebook.net/en_US/all.js"></script>
+	<!-- **	<script src="//connect.facebook.net/en_US/all.js"></script> -->
 		<script>
-		var token;
-		var name;
-		var email;
-		var languages = [];
-		var location;
-		var lat;
-		var lng;
-		var fbUrl;
-		
-		var graphUser_API = "https://graph.facebook.com/me?fields=name,email,languages,location,link&access_token=";
-
-
-/* FB authentication 
-************************************************************************************
-*/
-		  window.fbAsyncInit = function() {
-		    // init the FB JS SDK
-		    FB.init({
-		      appId      : '540749739313645',                        // App ID from the app dashboard
-		      cookie     : true,
-		      status     : true,                                 // Check Facebook Login status
-		      xfbml      : true                                  // Look for social plugins on the page
-		    });
-		
-		    // Additional initialization code such as adding Event Listeners goes here
-		    	FB.Event.subscribe('auth.login', function(response) {
-				    // Here we specify what we do with the response anytime this event occurs. 
-				    if (response.status === 'connected') {
-					    console.log("inside of the IF!!!!");
-				      token = response.authResponse.accessToken;
-				      graphUser_API += token;
-				      $.get(graphUser_API, function(response){
-				          console.log(response);
- 					      name = response.name;
- 					      console.log(name); 
- 					      email = response.email; 
- 					      console.log(email); 
- 					      data = {email: email};
-					      for (var i = 0; i < response.languages.length; i ++){
- 					      		languages.push(response.languages[i].name); 
-					      }
- 					      location = response.location.name;
- 					      console.log(location); 
- 					      fbUrl = response.link; 
-						     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
-							     if(response.result == 'Error'){
-							     	var geocoder = new google.maps.Geocoder();
-		// 					     	var geocoderRequest = new google.maps.GeocoderRequest(); 
-		// 					     	geocoderRequest.address = location; 
-							     	console.log(location);
-							     	/*
-geocoder.geocode({address:location},function(geocoderResults,geocoderStatus){
-									     	if(geocoderResults.length == 0){
-										     	console.log("geocoderError");
-									     	}else{
-									     	 
-										     data = {
-										     
-email:email, 
-												     name:name, 
-												     languages:languages, 
-												     locationString:location, 
-												     lat:geocoderResults[0].geometry.location.lat(), 
-												     lng:result.latlng[0][1], fbUrl:fbUrl
-
-										     };
-										     $.post("http:ec2-75-101-252-133.compute-1.amazonaws.com/api/signUp", data, function(response){
-											     if(response.result == "Error"){
-												     console.log("New Account Error");
-											     }else{
-												     console.log("Success!");
-											     }
-											     return;
-										     });
-									     	}
-								     	});
-*/
-								     }
+		function runJS() {
+			var token;
+			var name;
+			var email;
+			var languages = [];
+			var location;
+			var lat;
+			var lng;
+			var fbUrl;
+			
+			/* Google Map API */      
+			function createMarker(point,html) {
+			    var marker = new GMarker(point);
+			    GEvent.addListener(marker, "click", function() {
+				marker.openInfoWindowHtml(html);
+			     });
+			    return marker;
+			}
+			
+			// Used to place map on screen 
+			var map = new GMap2(document.getElementById("map"));
+			map.addControl(new GLargeMapControl());
+			map.addControl(new GMapTypeControl());
+			map.setCenter(new GLatLng(43.907787,-50.26),3);
+			
+			function hideEnter() {
+				$('.enter-body').removeClass('show');
+				console.log('This worked');
+			}
+			
+			
+			/* End Google Map API */
+			
+			/****var graphUser_API = "https://graph.facebook.com/me?fields=name,email,languages,location,link&access_token=";
+	
+	
+	/* FB authentication 
+	************************************************************************************
+	*/
+			 /**** window.fbAsyncInit = function() {
+			    // init the FB JS SDK
+			    FB.init({
+			      appId      : '540749739313645',                        // App ID from the app dashboard
+			      cookie     : true,
+			      status     : true,                                 // Check Facebook Login status
+			      xfbml      : true                                  // Look for social plugins on the page
+			    });
+			
+			    // Additional initialization code such as adding Event Listeners goes here
+				FB.Event.subscribe('auth.login', function(response) {
+					    // Here we specify what we do with the response anytime this event occurs. 
+					    if (response.status === 'connected') {
+						    console.log("inside of the IF!!!!");
+					      token = response.authResponse.accessToken;
+					      graphUser_API += token;
+					      $.get(graphUser_API, function(response){
+						  console.log(response);
+						      name = response.name;
+						      console.log(name); 
+						      email = response.email; 
+						      console.log(email); 
+						      data = {email: email};
+						      for (var i = 0; i < response.languages.length; i ++){
+								languages.push(response.languages[i].name); 
+						      }
+						      location = response.location.name;
+						      console.log(location); 
+						      fbUrl = response.link; 
+							     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
+								     if(response.result == 'Error'){
+									var geocoder = new google.maps.Geocoder();
+			// 					     	var geocoderRequest = new google.maps.GeocoderRequest(); 
+			// 					     	geocoderRequest.address = location; 
+									console.log(location);
+									/*
+	geocoder.geocode({address:location},function(geocoderResults,geocoderStatus){
+											if(geocoderResults.length == 0){
+												console.log("geocoderError");
+											}else{
+											 
+											     data = {
+											     
+	email:email, 
+													     name:name, 
+													     languages:languages, 
+													     locationString:location, 
+													     lat:geocoderResults[0].geometry.location.lat(), 
+													     lng:result.latlng[0][1], fbUrl:fbUrl
+	
+											     };
+											     $.post("http:ec2-75-101-252-133.compute-1.amazonaws.com/api/signUp", data, function(response){
+												     if(response.result == "Error"){
+													     console.log("New Account Error");
+												     }else{
+													     console.log("Success!");
+												     }
+												     return;
+											     });
+											}
+										});
+	*/
+				/****					     }
+						      });
+	 
 					      });
- 
-				      });
-				      				      
-				      //query the signin api  - on "error" go to "api/signup"; on "success" go to map view
-				      
-				    } else if (response.status === 'not_authorized') {
-				      
-				      
-				      FB.login();
-				    } else {
-				      
-				      
-				      FB.login();
-				    }
-				  });
-		  };
-		  
-		  
-/* 	FB API state change and events   
-************************************************************************************
-*/		
-		
-		  // Load the SDK asynchronously
-		  (function(d, s, id){
-		     var js, fjs = d.getElementsByTagName(s)[0];
-		     if (d.getElementById(id)) {return;}
-		     js = d.createElement(s); js.id = id;
-		     js.src = "//connect.facebook.net/en_US/all.js";
-		     fjs.parentNode.insertBefore(js, fjs);
-		   }(document, 'script', 'facebook-jssdk'));
-		   
-		   FB.api('/me', function(response){
+									      
+					      //query the signin api  - on "error" go to "api/signup"; on "success" go to map view
+					      
+					    } else if (response.status === 'not_authorized') {
+					      
+					      
+					      FB.login();
+					    } else {
+					      
+					      
+					      FB.login();
+					    }
+					  });
+			  };
+			  
+			  
+	/* 	FB API state change and events   
+	************************************************************************************
+	*/		
+			
+			  // Load the SDK asynchronously
+		/****	  (function(d, s, id){
+			     var js, fjs = d.getElementsByTagName(s)[0];
+			     if (d.getElementById(id)) {return;}
+			     js = d.createElement(s); js.id = id;
+			     js.src = "//connect.facebook.net/en_US/all.js";
+			     fjs.parentNode.insertBefore(js, fjs);
+			   }(document, 'script', 'facebook-jssdk'));
 			   
-		   });
-/* 
-************************************************************************************
-*/		   
+			   FB.api('/me', function(response){
+				   
+			   });
+	/* 
+	************************************************************************************
+	*/	}	  
 		</script>
 	<div id="fb-root" class="pull-right"></div>
-	<div class="navbar"><a class="brand">Brand</a></div>
 	<div class="navbar navbar-inverse navbar-fixed-top">
 	    <div class="container">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-			    <span class="icon-bar"></span>
-			    <span class="icon-bar"></span>
-			    <span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">Hello, World!</a>
-			<div class="nav-collapse collapse">
-			    <ul class="nav navbar-nav">
-				<li><a href="#contact">About</a></li>
-			    </ul>
-			    <!--/.nav-collapse -->
-			</div>
+		<i id="tiny-logo" class="navbar-brand" href="#">Logo</i>
+		<div class="nav-collapse collapse">
+		    <ul class="nav navbar-nav">
+			<li><a href="#contact">About</a></li>
+			<li><a href="#" id="left">Hello,<span id="user-name"></span></a></li>
+			<li><i id="user-pic"></i></li>
+		    </ul>
+		    <!--/.nav-collapse -->
+		</div>
+	    </div>
+	    <div class="container" id="filters">
+		<i class="navbar-brand" href="#">Filters</i>
+		<div class="nav-collapse collapse">
+		    <ul class="nav navbar-nav">
+			<li><a href="#contact">Language</a></li>
+			<li><a href="#">Skills<span id="user-name"></span></a></li>
+			<li><i id="user-pic"></i></li>
+		    </ul>
+		    <!--/.nav-collapse -->
+		</div>
 	    </div>
 	</div>
+
 	
 <!-- Login div -->
 	<div class="enter-body">
 	    <div id="enter-content">
 			<div id="logo"><i id="enter-logo"></i><i id="rotating-world"></i></div>
 			<div class="fb-login-button" show-faces="false"></div>
-<!-- 		<a href="" id="login">login &#9658;</a> -->
+ 		<a href="" id="login" onclick="hideEnter()">login &#9658;</a>
 	    </div>
     </div>
     
 <!--   Map view div   -->
-    <div class="">
-	    
-	    
-    </div>
-    
+    <div id="map"></div>
 	</body>
 </html>
