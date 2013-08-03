@@ -51,17 +51,24 @@ body {
     margin:50px auto 85px auto;
     width:500px;
 }
+
+.fb-login-print {
+    margin:0 auto;
+}
+
 #enter-logo {
     content:url(logo_short.png);
     margin:0 auto;
     width:300px;
 }
+
 #rotating-world{
     content: url(rotating_globe_00769.gif);
     display:inline-block;
     width:150px;
     margin-left:-20px;
 }
+
 #login {
     font-family:abeatbyKai, sans-serif;
     transition:all 250ms ease-in;
@@ -76,13 +83,14 @@ body {
     color:white;
     height:60px;
     margin-top:-60px;
-    margin-left:150px;
-    
+    margin-left:150px; 
 }
+
 #login:hover {
     background:#ddee99;
     color:black;
 }
+
 #login:active {
     background:#77bbdd;
 }

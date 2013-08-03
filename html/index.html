@@ -131,7 +131,7 @@
 						return function() {
 						var person = people[i];
 						var point = new GLatLng(person.lat, person.lng);
-						var html='<div><img src="'+person.iconUrl+'"><div>'+person.name+'|'+person.workPlace+'</div></div>';
+						var html='<div style="text-align:center; overflow:auto;"><img src="'+person.iconUrl+'"><div style="font-size:22px;">'+person.name+' &bull; '+person.workPlace+'</div></div>';
 						var marker = createMarker(point,html);
 						map.addOverlay(marker);
 					}}(people, i), 250*i);
