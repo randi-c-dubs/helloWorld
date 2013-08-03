@@ -1,16 +1,16 @@
 <html>
-	<head> 
+	<head>
 	    <script src="http://code.jquery.com/jquery.js"></script>
 	    <script src="bootstrap/js/bootstrap.min.js"></script>
 	    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	    <link href="bootstrap/css/index.css" rel="stylesheet">
-	    
+
 	    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyCi57alMzI6upazhiOfwQmwVxka_qSQ7s8" type="text/javascript"></script>
-	    
+
 	</head>
-	
+
 	<style>
-	
+
 	</style>
 	<body onload="runJS()">
 		<!--Facebok authentication-->
@@ -20,8 +20,32 @@
 			function App(){
 				this.user;
 				this.state = "loggedOut";
-				this.results;
-				
+				this.results = [{
+					lat: 20.445029,
+					lng: -11.425781
+				},{
+					lat: -2.383346,
+					lng: 27.421875
+				},{
+					lat: 32.463426,
+					lng: 113.730469
+				},{
+					lat: 58.487952,
+					lng: 41.660156
+				},{
+					lat: 48.625647,
+					lng: 6.152344
+				},{
+					lat: 38.942321,
+					lng: -80.156250
+				},{
+					lat: -7.20990,
+					lng: -50.976563
+				},{
+					lat: 42.407235,
+					lng:-106.875000
+				}];
+
 				this.switchState = function(newState){
 					switch(newState){
 						case "loggedOut":
@@ -31,20 +55,20 @@
 							this.switchUI(this.state);
 					}
 				};
-				
+
 				this.switchUI = function(newState){
 					$(".module").css("display","none");
 					switch(newState){
 						case "loggedIn":
 							$(".loggedIn-module").fadeIn();
-					}	
+					}
 				};
 			}
-			
+
 			var helloWorld = new App();
 		</script>
-	
-	
+
+
 		<script>
 
 		function runJS() {
@@ -56,10 +80,10 @@
 			var lat;
 			var lng;
 			var fbUrl;
-			
+
 			var graphUser_API = "https://graph.facebook.com/me?fields=name,email,languages,location,link,picture.type(small)&access_token=";
-			
-			/* Google Map API */      
+
+			/* Google Map API */
 			function createMarker(point,html) {
 			    var marker = new GMarker(point);
 			    GEvent.addListener(marker, "click", function() {
@@ -67,19 +91,19 @@
 			     });
 			    return marker;
 			}
-			
-			// Used to place map on screen 
+
+			// Used to place map on screen
 			var map = new GMap2(document.getElementById("map"));
 			map.addControl(new GLargeMapControl());
 			map.addControl(new GMapTypeControl());
 			map.setCenter(new GLatLng(43.907787,-50.26),3);
-			
+
 			function hideEnter() {
 				$('.enter-body').removeClass('show');
 			}
 
 
-/* FB authentication 
+/* FB authentication
 ************************************************************************************
 */
 		  window.fbAsyncInit = function() {
@@ -90,10 +114,10 @@
 		      status     : true,                                 // Check Facebook Login status
 		      xfbml      : true                                  // Look for social plugins on the page
 		    });
-		
+
 		    // Additional initialization code such as adding Event Listeners goes here
 			    FB.Event.subscribe('auth.login', function(response) {
-				    // Here we specify what we do with the response anytime this event occurs. 
+				    // Here we specify what we do with the response anytime this event occurs.
 				    if (response.status === 'connected') {
 						token = response.authResponse.accessToken;
 						graphUser_API += token;
@@ -106,13 +130,13 @@
 							success: function(response){
 								console.log(response);
 								name = response.name;
-								email = response.email; 
+								email = response.email;
 								data = {email: email};
 								for (var i = 0; i < response.languages.length; i ++){
-										languages.push(response.languages[i].name); 
+										languages.push(response.languages[i].name);
 								}
 								locationName = response.location.name;
-								fbUrl = response.link; 
+								fbUrl = response.link;
 								$.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
 								if(response.result == 'Error'){
 									var geocoder = new google.maps.Geocoder();
@@ -121,12 +145,12 @@
 									     	console.log("geocoderError");
 									 	} else {
 										     data = {
-										     		 email:email, 
-												     name:name, 
-												     languages:languages, 
-												     locationString:locationName, 
-												     lat:geocoderResults[0].geometry.location.lat(), 
-												     lng:geocoderResults[0].geometry.location.lng(), 
+										     		 email:email,
+												     name:name,
+												     languages:languages,
+												     locationString:locationName,
+												     lat:geocoderResults[0].geometry.location.lat(),
+												     lng:geocoderResults[0].geometry.location.lng(),
 												     fbUrl:fbUrl
 										     };
 										     console.log("About to doublepost");
@@ -145,13 +169,13 @@
 									helloWorld.switchState("loggedIn");
 								}
 							});
- 
+
 				      },
 						    error: function (responseData, textStatus, errorThrown) {
 						        console.log('GET failed.');
 						    }
 						});
-				      
+
 				    } else if (response.status === 'not_authorized') {
 
 				      FB.login();
@@ -160,12 +184,12 @@
 				    }
 				  });
 		  };
-		  
-		  
-/* 	FB API state change and events   
+
+
+/* 	FB API state change and events
 ************************************************************************************
-*/		
-		
+*/
+
 		  // Load the SDK asynchronously
 		  (function(d, s, id){
 		     var js, fjs = d.getElementsByTagName(s)[0];
@@ -174,24 +198,24 @@
 		     js.src = "//connect.facebook.net/en_US/all.js";
 		     fjs.parentNode.insertBefore(js, fjs);
 		   }(document, 'script', 'facebook-jssdk'));
-		   
+
 /*
 		   FB.api('/me', function(response){
-				   
+
 			   });
 */
-		 
-	/* 
+
+	/*
 	************************************************************************************
 	*/
 		   }
 		</script>
-		
-		
+
+
 		<script>
 			var state = "";
 		</script>
-		
+
 	<div id="fb-root" class="pull-right"></div>
 	<div class="navbar navbar-inverse navbar-fixed-top">
 	    <div class="container">
@@ -204,10 +228,10 @@
 		    <!--/.nav-collapse -->
 		</div>
 	    </div>
-	    
+
 	</div>
 
-	
+
 <!-- Login div -->
 	<div class="module" style="display:block;" id="theHero">
 	    <div id="enter-content">
@@ -215,7 +239,7 @@
 			<div class="fb-login-button" show-faces="true"></div>
 	    </div>
     </div>
-    
+
 <!--   Map view div   -->
     <div id="map"></div>
 	</body>
