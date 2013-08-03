@@ -48,6 +48,7 @@ userSchema.statics.signIn = function(req, res) {
 	User.findOne({token: token}, function(err, user) {
 		if (err) res.send({result: "Error"});
 		else {
+			console.log("User")
 			user.populate("projects", function(err, populatedUser) {
 				if (err) res.send({result: "Error"});
 				else {
