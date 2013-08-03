@@ -61,8 +61,6 @@
 						     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signIn", data,function(response){
 							     if(response.result == 'Error'){
 							     	var geocoder = new google.maps.Geocoder();
-		 					     	var geocoderRequest = new google.maps.GeocoderRequest(); 
-		 					     	//geocoderRequest.address = location; 
 							     	//console.log(location);
 							     	/*
 geocoder.geocode({address:location},function(geocoderResults,geocoderStatus){
