@@ -73,13 +73,13 @@
 				this.switchState = function(newState){
 					switch(newState){
 						case "loggedOut":
-							$(".loggedOut-module").fadeOut();
 							$(".loggedIn-module").fadeOut();
 							break;
 						case "loggedIn":
 							this.state = "loggedIn";
 							this.switchUI(this.state);
-							$(".loggedOut-module").fadeIn();
+							$(".loggedOut-module").fadeOut();
+							setMarkers(this.results);
 					}
 				};
 
@@ -92,12 +92,34 @@
 				};
 			}
 
+			function setMarkers(people) {
+				for (var i=0; i<people.length; i++) {
+					setTimeout( function(people, i) {
+						return function() {
+						var person = people[i];
+						var point = new GLatLng(person.lat, person.lng);
+						var html='<div><img src="'+person.iconUrl+'"><div>'+person.name+'|'+person.workPlace+'</div></div>';
+						var marker = createMarker(point,html);
+						map.addOverlay(marker);
+					}}(people, i), 250*i);
+				}
+			}
+
+			/* Google Map API */
+			function createMarker(point,html) {
+			    var marker = new GMarker(point);
+			    GEvent.addListener(marker, "click", function() {
+				marker.openInfoWindowHtml(html);
+			     });
+			    return marker;
+			}
+
 			var helloWorld = new App();
 		</script>
 
 
 		<script>
-
+		var map;
 		function runJS() {
 			var token;
 			var name;
@@ -110,35 +132,15 @@
 
 			var graphUser_API = "https://graph.facebook.com/me?fields=name,email,languages,location,link&access_token=";
 
-			/* Google Map API */
-			function createMarker(point,html) {
-			    var marker = new GMarker(point);
-			    GEvent.addListener(marker, "click", function() {
-				marker.openInfoWindowHtml(html);
-			     });
-			    return marker;
-			}
+
 
 			// Used to place map on screen
-			var map = new GMap2(document.getElementById("map"));
+			map = new GMap2(document.getElementById("map"));
 			map.addControl(new GLargeMapControl());
 			map.addControl(new GMapTypeControl());
 			map.setCenter(new GLatLng(43.907787,-50.26),3);
-			
-			function setMarkers(people) {
-				for (var i=0; i<people.length; i++) {
-					setTimeout( function(people, i) {
-						return function() {
-						var person = people[i];
-						var point = new GLatLng(person.lat, person.lng);
-						var html='<div style="text-align:center; overflow:auto;"><img src="'+person.iconUrl+'"><div style="font-size:22px;">'+person.name+' &bull; '+person.workPlace+'</div></div>';
-						var marker = createMarker(point,html);
-						map.addOverlay(marker);
-					}}(people, i), 250*i);
-				}
-			}
-			
-			setMarkers(helloWorld.results);
+
+
 
 			function hideEnter() {
 				$('.enter-body').removeClass('show');
@@ -213,6 +215,9 @@
 							});
 
 				      },
+				      
+				      	
+				      
 						    error: function (responseData, textStatus, errorThrown) {
 						        console.log('GET failed.');
 						    }
@@ -227,6 +232,11 @@
 				      FB.login();
 				    }
 				  });
+				  
+				  
+				  FB.Event.subscribe('auth.logout', function(response) {
+					  top.location.href = "http://ec2-75-101-252-133.compute-1.amazonaws.com/";
+					  });
 		  };
 
 
