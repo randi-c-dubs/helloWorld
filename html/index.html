@@ -81,7 +81,7 @@
 				};
 
 				this.switchUI = function(newState){
-					$(".module").css("display","none");
+					$(".module").fadeOut();
 					switch(newState){
 						case "loggedIn":
 							$(".loggedIn-module").fadeIn();
@@ -104,10 +104,10 @@
 			var lat;
 			var lng;
 			var fbUrl;
-			
+
 			var graphUser_API = "https://graph.facebook.com/me?fields=name,email,languages,location,link&access_token=";
-			
-			/* Google Map API */     
+
+			/* Google Map API */
 			function createMarker(point,html) {
 			    var marker = new GMarker(point);
 			    GEvent.addListener(marker, "click", function() {
