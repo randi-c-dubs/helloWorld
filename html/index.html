@@ -73,10 +73,13 @@
 				this.switchState = function(newState){
 					switch(newState){
 						case "loggedOut":
+							$(".loggedOut-module").fadeOut();
+							$(".loggedIn-module").fadeOut();
 							break;
 						case "loggedIn":
 							this.state = "loggedIn";
 							this.switchUI(this.state);
+							$(".loggedOut-module").fadeIn();
 					}
 				};
 
@@ -200,10 +203,12 @@
 						    }
 						});
 
-				    } else if (response.status === 'not_authorized') {
+				    } else if (response.status == 'not_authorized') {
 
 				      FB.login();
-				    } else {
+				    } else if(response.status == 'auth-logout'){
+					    FB.logout();
+				    }else {
 				      FB.login();
 				    }
 				  });
@@ -248,6 +253,7 @@
 		    <ul class="nav navbar-nav">
 			<li><a href="#" id="left-user-name">Hello, World<span id="user-name"></span></a></li>
 			<li><i id="user-pic"></i></li>
+			<li><button id=".loggedIn-module" class="module">Logout</button></li>
 		    </ul>
 		    <!--/.nav-collapse -->
 		</div>
@@ -260,7 +266,7 @@
 	<div class="module" style="display:block;" id="theHero">
 	    <div id="enter-content">
 			<div id="logo"><i id="enter-logo"></i><i id="rotating-world"></i></div>
-			<div class="fb-login-button" show-faces="true"></div>
+			<div class="fb-login-button" id="loggedOut-module" show-faces="true" ></div>
 	    </div>
     </div>
 
