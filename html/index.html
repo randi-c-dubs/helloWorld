@@ -48,6 +48,7 @@
 				    if (response.status === 'connected') {
 					    console.log("inside of the IF!!!!");
 				      token = response.authResponse.accessToken;
+				      graphUser_API += token;
 				      $.get(graphUser_API, function(response){
 				          console.log(response);
 					      name = response.name;
