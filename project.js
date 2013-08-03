@@ -42,7 +42,7 @@ projectSchema.statics.deleteProject = function(req, res) {
 		else {
 			project.remove(function(err, project) {
 				if (err) res.send({result: "Error", payload: JSON.stringify(err)});
-				else (err) res.send({result: "Success"});
+				else res.send({result: "Success"});
 			})
 		}
 	})
