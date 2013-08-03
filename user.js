@@ -19,7 +19,7 @@ userSchema.statics.signUp = function(req, res) {
 	var token = req.body.token;
 	var name = req.body.name;
 	var email = req.body.email;
-	var languages = req.body.languages;
+	var languages = JSON.parse(req.body.languages);
 	var lat = req.body.lat;
 	var lng = req.body.lng;
 	var locationString = req.body.locationString;
@@ -40,8 +40,6 @@ userSchema.statics.signUp = function(req, res) {
 		else res.send({result: "Success"});
 	});
 }
-
-/* Helpers */
 
 userSchema.statics.signIn = function(req, res) {
 	var token = req.body.token;
