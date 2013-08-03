@@ -110,6 +110,7 @@
 									});
 								}else{		//Remove the welcome screen and flash the map view
 									alert("You successfully Signed in!!!");
+									map.className = "visible";
 								}
 							});
  
@@ -120,6 +121,7 @@
 						});
 				      
 				    } else if (response.status === 'not_authorized') {
+				    	map.className = "hidden";
 				      FB.login();
 				    } else {
 				      FB.login();
@@ -187,6 +189,6 @@
     </div>
     
 <!--   Map view div   -->
-    <div id="map"></div>
+    <div id="map" class=""></div>
 	</body>
 </html>
