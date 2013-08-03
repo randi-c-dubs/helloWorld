@@ -71,12 +71,15 @@
 										     	console.log("geocoderError");
 									     	}else{
 									     	 
-										     data = {email:email, 
+										     data = {
+										     /*
+email:email, 
 												     name:name, 
 												     languages:languages, 
 												     locationString:location, 
 												     lat:geocoderResults[0].geometry.location.lat(), 
 												     lng:result.latlng[0][1], fbUrl:fbUrl
+*/
 										     };
 										     $.post("http://ec2-75-101-252-133.compute-1.amazonaws.com/api/signUp", data, function(response){
 											     if(response.result == "Error"){
